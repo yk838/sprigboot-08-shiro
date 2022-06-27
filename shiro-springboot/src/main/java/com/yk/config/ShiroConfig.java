@@ -10,19 +10,6 @@ import java.util.LinkedHashMap;
 
 @Configuration
 public class ShiroConfig {
-    // 1，创建realm 对象，需要自定义类 我们写个UserRealm类
-    @Bean(name="userRealm")
-    public UserRealm userRealm() {
-        return new UserRealm();
-    }
-    // 2.DefaultwebSecurityManager
-    @Bean(name="SecurityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm) {
-        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        // 关联userRealm
-        securityManager.setRealm(userRealm);
-        return securityManager;
-    }
     //3. ShiroFilterFactoryBean
     @Bean(name="shiroFilterFactoryBean")
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("SecurityManager")DefaultWebSecurityManager defaultWebSecurityManager) {
@@ -46,5 +33,18 @@ public class ShiroConfig {
 
         bean.setFilterChainDefinitionMap(filterMap);
         return bean;
+    }
+    // 2.DefaultwebSecurityManager
+    @Bean(name="SecurityManager")
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm) {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        // 关联userRealm
+        securityManager.setRealm(userRealm);
+        return securityManager;
+    }
+    // 1，创建realm 对象，需要自定义类 我们写个UserRealm类
+    @Bean(name="userRealm")
+    public UserRealm userRealm() {
+        return new UserRealm();
     }
 }
