@@ -12,4 +12,5 @@ public class Student {
     private int id;
     private String name;
     private String pwd;
+    private String perm;
 }
